@@ -18,19 +18,23 @@ class ViewController: UIViewController {
     @IBOutlet weak var signSwitch2: UISwitch!
 
     @IBAction func calcButton(_ sender: Any) {
-        guard let input1 = textField1.text
-                .flatMap({Int($0)})
-                .flatMap({signSwitch1.isOn ? -1*$0 : $0}),
-                let input2 = textField2.text
-                .flatMap({Int($0)})
-                .flatMap({signSwitch2.isOn ? -1*$0 : $0})
-        else {
+        let result = zip(
+            [textField1, textField2]
+                .compactMap { $0?.text }
+                .compactMap { Int($0) },
+            [signSwitch1, signSwitch2]
+                .compactMap { $0?.isOn }
+                .map { $0 ? -1 : 1 }
+        )
+            .map { $0 * $1 }
+
+        guard result.count == 2 else {
             resultLabel.text = "数値を入力してください"
             return
         }
-        inputLabel1.text = "\(input1)"
-        inputLabel2.text = "\(input2)"
-        resultLabel.text = "\(input1 + input2)"
+
+        inputLabel1.text = "\(result[0])"
+        inputLabel2.text = "\(result[1])"
+        resultLabel.text = "\(result[0] + result[1])"
     }
 }
-
