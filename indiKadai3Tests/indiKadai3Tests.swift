@@ -8,7 +8,7 @@
 import XCTest
 @testable import indiKadai3
 
-class indiKadai3Tests: XCTestCase {
+class IndiKadai3Tests: XCTestCase {
 
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.
